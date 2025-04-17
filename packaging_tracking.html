@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packaging Tracking System</title>
+    <link rel="stylesheet" href="packaging_style.css">
+</head>
+<body>
+    <header>
+        <h1>Packaging Tracking System</h1>
+    </header>
+
+    <section id="packaging-form">
+        <h2>Track Packaging</h2>
+        <form id="track-form">
+            <label for="product-id">Product ID:</label>
+            <input type="text" id="product-id" placeholder="Enter Product ID" required>
+
+            <label for="packaging-date">Packaging Date:</label>
+            <input type="date" id="packaging-date" required>
+
+            <label for="status">Packaging Status:</label>
+            <select id="status" required>
+                <option value="Completed">Completed</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Pending">Pending</option>
+            </select>
+
+            <label for="comments">Additional Comments:</label>
+            <textarea id="comments" rows="4" placeholder="Enter comments..."></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section id="packaging-report">
+        <h2>Packaging Report</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Packaging Date</th>
+                    <th>Status</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody id="report-body">
+                <tr>
+                    <td colspan="4">No data available</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Agricultural Management System</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById("track-form");
+        const reportBody = document.getElementById("report-body");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const productId = document.getElementById("product-id").value;
+            const packagingDate = document.getElementById("packaging-date").value;
+            const status = document.getElementById("status").value;
+            const comments = document.getElementById("comments").value;
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${productId}</td>
+                <td>${packagingDate}</td>
+                <td>${status}</td>
+                <td>${comments || "N/A"}</td>
+            `;
+            reportBody.appendChild(newRow);
+
+            form.reset();  // Reset form fields after submission
+        });
+    </script>
+</body>
+</html>

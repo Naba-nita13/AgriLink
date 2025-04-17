@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Graded Produce Tracking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f0f0;
+    }
+
+    header {
+      background-color: #2e7d32;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .timeline {
+      border-left: 4px solid #2e7d32;
+      padding-left: 30px;
+      margin-top: 20px;
+    }
+
+    .step {
+      position: relative;
+      margin-bottom: 30px;
+    }
+
+    .step::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      background-color: #2e7d32;
+      border: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px #2e7d32;
+    }
+
+    .step h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+
+    .step p {
+      margin: 5px 0 0;
+      color: #555;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Tracking Graded Produce_tracking.html</h1>
+  </header>
+
+  <div class="container">
+    <h2>Select a Product</h2>
+    <select id="productSelect" onchange="showTimeline()">
+      <option value="mango">Mango</option>
+      <option value="wheat">Wheat</option>
+      <option value="rice">Rice</option>
+    </select>
+
+    <div class="timeline" id="timeline">
+      <!-- Timeline will load here -->
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Agri Supply Chain Tracking System
+  </footer>
+
+  <script>
+    const data = {
+      mango: [
+        { step: "Farm Harvest", desc: "Picked from Rajshahi on April 2" },
+        { step: "Grading", desc: "Sorted as Grade A" },
+        { step: "Packaging", desc: "Packed at MangoPack Ltd." },
+        { step: "Distribution", desc: "Sent to Dhaka Warehouse" },
+        { step: "Retail", desc: "Delivered to Supermarket" }
+      ],
+      wheat: [
+        { step: "Farm Harvest", desc: "Collected in Rangpur on Mar 10" },
+        { step: "Grading", desc: "Moisture level tested" },
+        { step: "Packaging", desc: "Packed in 50kg sacks" },
+        { step: "Distribution", desc: "Sent to National Depot" },
+        { step: "Retail", desc: "Supplied to B2B buyers" }
+      ],
+      rice: [
+        { step: "Farm Harvest", desc: "Harvested in Khulna on Feb 20" },
+        { step: "Grading", desc: "Checked for grain size" },
+        { step: "Packaging", desc: "Bagged at RiceCo" },
+        { step: "Distribution", desc: "Delivered to distributors" },
+        { step: "Retail", desc: "Arrived at markets in March" }
+      ]
+    };
+
+    function showTimeline() {
+      const selected = document.getElementById("productSelect").value;
+      const steps = data[selected];
+      const timeline = document.getElementById("timeline");
+      timeline.innerHTML = "";
+
+      steps.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "step";
+        div.innerHTML = `<h3>${item.step}</h3><p>${item.desc}</p>`;
+        timeline.appendChild(div);
+      });
+    }
+
+    // Show default timeline on page load
+    window.onload = showTimeline;
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quality Analysis - Agricultural Products</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background-color: #28a745;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .filter {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .filter input {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Quality Analysis & Problem Detection</h1>
+  </header>
+
+  <div class="container">
+    <h2>Crop Quality Trends (Chart)</h2>
+    <div class="chart-container">
+      <canvas id="qualityChart"></canvas>
+    </div>
+
+    <div class="filter">
+      <label for="search">Filter by Crop Name:</label>
+      <input type="text" id="search" placeholder="e.g. Mango, Wheat, Rice..." onkeyup="filterTable()" />
+    </div>
+
+    <h2>Identified Problem Areas</h2>
+    <table id="problemTable">
+      <thead>
+        <tr>
+          <th>Crop</th>
+          <th>Region</th>
+          <th>Issue</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mango</td>
+          <td>Rajshahi</td>
+          <td>High bruising rate</td>
+          <td>Moderate</td>
+        </tr>
+        <tr>
+          <td>Wheat</td>
+          <td>Rangpur</td>
+          <td>Dryness below standard</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td>Potato</td>
+          <td>Bogura</td>
+          <td>Size inconsistency</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td>Rice</td>
+          <td>Khulna</td>
+          <td>Discoloration detected</td>
+          <td>High</td>
+        </tr>
+        <tr>
+          <td>Tomato</td>
+          <td>Jessore</td>
+          <td>Cracked skin</td>
+          <td>Moderate</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    &copy; 2025 Agricultural Management System
+  </footer>
+
+  <script>
+    // Create Line Chart using Chart.js
+    const ctx = document.getElementById('qualityChart').getContext('2d');
+    const qualityChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Mango Quality (%)',
+            data: [85, 83, 80, 78, 75, 77],
+            borderColor: '#ff9900',
+            fill: false
+          },
+          {
+            label: 'Wheat Quality (%)',
+            data: [90, 88, 85, 82, 80, 79],
+            borderColor: '#007bff',
+            fill: false
+          },
+          {
+            label: 'Rice Quality (%)',
+            data: [88, 85, 84, 83, 81, 80],
+            borderColor: '#28a745',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        },
+        scales: {
+          y: {
+            min: 70,
+            max: 100
+          }
+        }
+      }
+    });
+
+    // Filter Table Rows
+    function filterTable() {
+      const input = document.getElementById("search");
+      const filter = input.value.toUpperCase();
+      const table = document.getElementById("problemTable");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        const td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          const txtValue = td.textContent || td.innerText;
+          tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
